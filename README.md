@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de Atendimento Psicológico
 
-## Getting Started
+Este é um projeto [Next.js](https://nextjs.org) criado com [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) para gerenciamento de consultas e prontuários psicológicos.
 
-First, run the development server:
+## Começando
+
+Primeiro, execute o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
-# or
+# ou
 pnpm dev
-# or
+# ou
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Você pode começar a editar a página modificando `app/page.tsx`. A página atualiza automaticamente conforme você edita o arquivo.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Este projeto usa [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) para otimizar e carregar automaticamente [Geist](https://vercel.com/font), uma nova família de fontes da Vercel.
 
-## Learn More
+## Configuração do Banco de Dados
 
-To learn more about Next.js, take a look at the following resources:
+Este projeto utiliza PostgreSQL com Prisma ORM:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Pré-requisitos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- PostgreSQL instalado e rodando
+- Node.js 18+
 
-## Deploy on Vercel
+### Configuração Inicial
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Instale as dependências:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install
+```
+
+2. **Configure as variáveis de ambiente:**
+   Copie o arquivo `.env.example` para `.env` e configure sua string de conexão do PostgreSQL:
+
+```env
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/psiaten?schema=public"
+```
+
+3. **Execute as migrações do banco:**
+
+```bash
+npx prisma db push
+```
+
+4. **Popule o banco com dados de exemplo:**
+
+```bash
+npx tsx scripts/seed.ts
+```
+
+5. **Visualize os dados no Prisma Studio (opcional):**
+
+```bash
+npx prisma studio
+```
+
+## Funcionalidades
+
+- ✅ **Multi-tenancy** - Suporte a múltiplas clínicas
+- ✅ **Gestão de Pacientes** - Cadastro e prontuários completos
+- ✅ **Agendamento de Consultas** - Sistema de agendamento flexível
+- ✅ **Prontuários Eletrônicos** - Anotações e documentos seguros
+- ✅ **Dashboard** - Visão geral das atividades
+- ✅ **Relatórios** - Acompanhamento e estatísticas
+
+## Estrutura do Projeto
+
+```
+├── app/                    # Páginas e componentes Next.js
+├── components/             # Componentes reutilizáveis
+├── lib/                    # Utilitários e configurações
+├── prisma/                 # Schema e migrações do banco
+├── scripts/                # Scripts de seed e utilitários
+└── public/                 # Arquivos estáticos
+```
+
+## Tecnologias Utilizadas
+
+- **Framework:** Next.js 15 (App Router)
+- **Banco de Dados:** PostgreSQL + Prisma ORM
+- **UI:** Tailwind CSS + Radix UI
+- **Autenticação:** NextAuth.js
+- **Tipagem:** TypeScript
+
+## Saiba Mais
+
+Para aprender mais sobre Next.js, consulte os seguintes recursos:
+
+- [Documentação do Next.js](https://nextjs.org/docs) - aprenda sobre recursos e API do Next.js
+- [Tutorial Interativo do Next.js](https://nextjs.org/learn) - um tutorial interativo do Next.js
+- [Documentação do Prisma](https://www.prisma.io/docs) - guia completo do Prisma ORM
+
+Você pode conferir [o repositório do Next.js no GitHub](https://github.com/vercel/next.js) - seu feedback e contribuições são bem-vindos!
+
+## Deploy na Vercel
+
+A maneira mais fácil de fazer deploy da sua aplicação Next.js é usar a [Plataforma Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) dos criadores do Next.js.
+
+Confira nossa [documentação de deploy do Next.js](https://nextjs.org/docs/app/building-your-application/deploying) para mais detalhes.
+
+## Contribuição
+
+1. Faça um fork do projeto
+2. Crie sua feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.

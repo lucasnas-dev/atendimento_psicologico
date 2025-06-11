@@ -1,0 +1,15 @@
+# Desenvolvimento
+npm run dev              # Inicia o servidor de desenvolvimento
+npm run db:studio        # Abre o Prisma Studio
+npm run type-check       # Verifica tipos TypeScript
+
+# Banco de dados
+npm run db:generate      # Gera o cliente Prisma
+npm run db:push          # Sincroniza schema sem migração
+npm run db:migrate       # Cria e aplica migrações
+npm run db:seed          # Popula o banco com dados iniciais
+npm run db:reset         # Reseta e repopula o banco
+
+# Produção
+npm run build            # Build para produção
+npm run start            # Inicia servidor de produção

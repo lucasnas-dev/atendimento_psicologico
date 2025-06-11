@@ -1,0 +1,181 @@
+🗃️ PRISMA - GUIA COMPLETO DE COMANDOS
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 COMANDOS BÁSICOS
+
+Inicialização:
+• npx prisma init
+• npx prisma init --datasource-provider postgresql
+• npx prisma init --datasource-provider mysql
+• npx prisma init --datasource-provider sqlite
+
+Cliente Prisma:
+• npx prisma generate
+• npx prisma generate --watch
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🗄️ COMANDOS DE BANCO DE DADOS
+
+Push Schema (Desenvolvimento):
+• npx prisma db push
+• npx prisma db push --force-reset
+• npx prisma db push --accept-data-loss
+
+Pull Schema:
+• npx prisma db pull
+• npx prisma db pull --force
+
+Reset Database:
+• npx prisma db reset
+• npx prisma db reset --force
+• npx prisma db reset --skip-seed
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔄 MIGRATIONS
+
+Desenvolvimento:
+• npx prisma migrate dev
+• npx prisma migrate dev --name add_user_table
+• npx prisma migrate dev --name update_user_email
+• npx prisma migrate dev --create-only
+
+Produção:
+• npx prisma migrate deploy
+• npx prisma migrate status
+• npx prisma migrate resolve --applied 20231201000000_init
+• npx prisma migrate resolve --rolled-back 20231201000000_init
+
+Reset Migrations:
+• npx prisma migrate reset
+• npx prisma migrate reset --skip-seed
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🌱 SEED (POPULAR DADOS)
+
+Executar Seed:
+• npx prisma db seed
+• npx tsx prisma/seed.ts
+• node prisma/seed.js
+
+Configuração no package.json:
+{
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎨 PRISMA STUDIO
+
+• npx prisma studio                           # localhost:5555
+• npx prisma studio --port 3000              # porta específica
+• npx prisma studio --schema ./custom/schema.prisma
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔍 VALIDAÇÃO E FORMATAÇÃO
+
+• npx prisma validate                         # validar schema
+• npx prisma format                          # formatar schema
+• npx prisma validate --schema ./custom/schema.prisma
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 COMANDOS DE DEBUG
+
+• npx prisma --version                       # ver versão
+• npx prisma db execute --stdin < query.sql # executar SQL
+• npx prisma debug                          # debug geral
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔧 COMANDOS AVANÇADOS
+
+Arquivos Específicos:
+• npx prisma generate --schema ./custom/schema.prisma
+• npx prisma db push --schema ./custom/schema.prisma
+• npx prisma db push --env-file .env.local
+
+Múltiplos Schemas:
+• npx prisma generate --schema ./prisma/user.prisma
+• npx prisma generate --schema ./prisma/admin.prisma
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 FLUXO DE TRABALHO TÍPICO
+
+Desenvolvimento Local:
+1. Editar schema.prisma
+2. npx prisma db push
+3. npx prisma generate
+4. npx prisma studio
+5. npx prisma db seed (se necessário)
+
+Deploy em Produção:
+1. npx prisma migrate dev --name production_ready
+2. npx prisma migrate deploy
+3. npx prisma generate
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 COMANDOS PARA SISTEMA DE ATENDIMENTO
+
+Setup Inicial:
+• npx prisma init --datasource-provider postgresql
+• npx prisma db push
+• npx prisma generate
+• npx prisma studio
+
+Mudanças no Schema:
+1. Editar schema.prisma (usuários, consultas, etc.)
+2. npx prisma db push
+3. npx prisma migrate dev --name add_consultas_pacientes
+4. npx prisma generate
+
+Monitoramento:
+• npx prisma migrate status
+• npx prisma studio
+• npx prisma validate
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔥 COMANDOS DE EMERGÊNCIA
+
+CUIDADO! Podem causar perda de dados:
+• npx prisma migrate reset --force
+• npx prisma db push --force-reset --accept-data-loss
+• npx prisma migrate resolve --applied MIGRATION_NAME
+
+Backup antes de mudanças críticas:
+• pg_dump database_name > backup.sql      # PostgreSQL
+• mysqldump database_name > backup.sql    # MySQL
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📝 COMANDOS POR AMBIENTE
+
+Desenvolvimento:
+• npx prisma db push
+• npx prisma generate
+• npx prisma studio
+• npx prisma db seed
+
+Staging/Teste:
+• npx prisma migrate deploy
+• npx prisma generate
+
+Produção:
+• npx prisma migrate deploy
+• npx prisma generate
+• NUNCA usar db push em produção!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📅 Criado em: Junho 2025
+🔧 Versão Prisma: 5.x
+💾 Arquivo: comandos-prisma.txt

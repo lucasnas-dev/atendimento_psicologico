@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id        String   @id @default(cuid())
+  nome      String
+  email     String   @unique
+  senha     String
+  crp       String?
+  role      String   @default("psicologo")
+  tenantId  String
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant    Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  pacientes Paciente[]
+  consultas Consulta[]
+  anotacoes Anotacao[]
+
+  @@index([tenantId])
+  @@index([email])
+}
+
+model Tenant {
+  id        String   @id @default(cuid())
+  nome      String
+  dominio   String?  @unique
+  plano     String   @default("basico")
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  usuarios    Usuario[]
+  pacientes   Paciente[]
+  consultas   Consulta[]
+  anotacoes   Anotacao[]
+  prontuarios Prontuario[]
+
+  @@index([dominio])
+}
+
+model Paciente {
+  id             String    @id @default(cuid())
+  nome           String
+  email          String?
+  telefone       String?
+  dataNascimento DateTime
+  genero         String?
+  endereco       String?
+  observacoes    String?
+  ativo          Boolean   @default(true)
+  tenantId       String
+  usuarioId      String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  tenant    Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  usuario   Usuario     @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  consultas Consulta[]
+  prontuario Prontuario?
+
+  @@index([tenantId])
+  @@index([usuarioId])
+  @@index([email])
+}
+
+model Consulta {
+  id          String   @id @default(cuid())
+  data        DateTime
+  duracao     Int      @default(50)
+  status      String   @default("agendada") // agendada, realizada, cancelada, faltou
+  observacoes String?
+  valor       Decimal? @db.Decimal(10, 2)
+  pago        Boolean  @default(false)
+  tenantId    String
+  pacienteId  String
+  usuarioId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenant    Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  paciente  Paciente   @relation(fields: [pacienteId], references: [id], onDelete: Cascade)
+  usuario   Usuario    @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  anotacoes Anotacao[]
+
+  @@index([tenantId])
+  @@index([pacienteId])
+  @@index([usuarioId])
+  @@index([data])
+  @@index([status])
+}
+
+model Anotacao {
+  id         String   @id @default(cuid())
+  titulo     String
+  conteudo   String
+  tipo       String   @default("geral") // geral, sessao, observacao
+  tenantId   String
+  usuarioId  String
+  consultaId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  tenant   Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  usuario  Usuario   @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  consulta Consulta? @relation(fields: [consultaId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId])
+  @@index([usuarioId])
+  @@index([consultaId])
+  @@index([tipo])
+}
+
+model Prontuario {
+  id         String   @id @default(cuid())
+  pacienteId String   @unique
+  tenantId   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  tenant     Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  paciente   Paciente    @relation(fields: [pacienteId], references: [id], onDelete: Cascade)
+  documentos Documento[]
+
+  @@index([tenantId])
+}
+
+model Documento {
+  id             String    @id @default(cuid())
+  tipo           String    // tcle, contrato, autorizacao_menor, laudo, receita
+  titulo         String
+  conteudo       String
+  assinado       Boolean   @default(false)
+  dataAssinatura DateTime?
+  prontuarioId   String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  prontuario Prontuario @relation(fields: [prontuarioId], references: [id], onDelete: Cascade)
+
+  @@index([prontuarioId])
+  @@index([tipo])
+}
+
+model Configuracao {
+  id        String   @id @default(cuid())
+  chave     String   @unique
+  valor     String
+  descricao String?
+  tenantId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([chave])
+  @@index([tenantId])
+}

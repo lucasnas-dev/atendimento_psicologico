@@ -5,6 +5,7 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react"; // ✅ NextAuth
 import {
   LayoutDashboard,
   Calendar,
@@ -17,7 +18,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/use-auth";
+// ❌ import { useAuth } from "@/hooks/use-auth"; // Removido
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -25,9 +26,16 @@ interface DashboardShellProps {
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
-  const { user, logout } = useAuth();
+  const { data: session, status } = useSession(); // ✅ NextAuth
+  const user = session?.user; // ✅ User do NextAuth
+
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  // ✅ Função de logout com NextAuth
+  const handleLogout = () => {
+    signOut({ callbackUrl: "/login" });
+  };
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -59,6 +67,35 @@ export function DashboardShell({ children }: DashboardShellProps) {
     { name: "Anotações", href: "/anotacoes", icon: ClipboardList },
     { name: "Relatórios", href: "/relatorios", icon: BarChart3 },
   ];
+
+  // ✅ Loading state
+  if (status === "loading") {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  // ✅ Not authenticated
+  if (!session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-semibold">Acesso negado</h2>
+          <p className="text-gray-600">
+            Você precisa estar logado para acessar esta página.
+          </p>
+          <Link
+            href="/login"
+            className="mt-4 inline-block text-blue-600 hover:underline"
+          >
+            Fazer login
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -118,12 +155,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 <div className="flex items-center space-x-3">
                   <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
                     <span className="text-sm font-medium text-gray-600">
-                      {user.nome?.charAt(0) || "U"}
+                      {user.name?.charAt(0) || user.email?.charAt(0) || "U"}
                     </span>
                   </div>
                   <div className="space-y-0.5">
                     <p className="text-sm font-medium">
-                      {user.nome || "Usuário"}
+                      {user.name || "Usuário"}
                     </p>
                     <p className="text-xs text-gray-500">{user.email}</p>
                   </div>
@@ -131,7 +168,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 <Button
                   variant="outline"
                   className="w-full justify-start"
-                  onClick={logout}
+                  onClick={handleLogout} // ✅ Nova função de logout
                 >
                   <LogOut className="mr-2 h-4 w-4" />
                   Sair

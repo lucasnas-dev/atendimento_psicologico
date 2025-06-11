@@ -1,29 +1,29 @@
-import type React from "react"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { AuthProvider } from "@/hooks/use-auth"
+"use client";
 
-const inter = Inter({ subsets: ["latin"] })
+import type React from "react";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { SessionProvider } from "next-auth/react"; // ✅ NextAuth
 
-export const metadata = {
-  title: "PsiAten - Sistema de Atendimento Psicológico",
-  description: "Sistema para gerenciamento de atendimentos psicológicos",
-    generator: 'v0.dev'
-}
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
-          <AuthProvider>{children}</AuthProvider>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="system"
+          enableSystem
+        >
+          <SessionProvider>{children}</SessionProvider>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

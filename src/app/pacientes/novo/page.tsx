@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react"; // ✅ NextAuth
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/src/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -22,7 +23,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
+} from "@/components/ui/select";
 import {
   Card,
   CardContent,
@@ -30,7 +31,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
@@ -44,7 +45,7 @@ import {
 import { cn } from "@/lib/utils";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
-import { useAuth } from "@/hooks/use-auth";
+// ❌ import { useAuth } from "@/hooks/use-auth"; // Removido
 
 const pacienteSchema = z.object({
   nome: z.string().min(3, {
@@ -76,9 +77,11 @@ type PacienteFormValues = z.infer<typeof pacienteSchema>;
 
 export default function NovoPacientePage() {
   const router = useRouter();
+  const { data: session, status } = useSession(); // ✅ NextAuth
+  const user = session?.user; // ✅ User do NextAuth
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuth();
 
   const form = useForm<PacienteFormValues>({
     resolver: zodResolver(pacienteSchema),
@@ -111,7 +114,7 @@ export default function NovoPacientePage() {
           ...data,
           dataNascimento: data.dataNascimento.toISOString(),
           usuarioId: user.id,
-          tenantId: user.tenantId,
+          tenantId: user.tenantId, // ✅ TenantId do NextAuth
         }),
       });
 
@@ -133,6 +136,33 @@ export default function NovoPacientePage() {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  // ✅ Loading state
+  if (status === "loading") {
+    return (
+      <DashboardShell>
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        </div>
+      </DashboardShell>
+    );
+  }
+
+  // ✅ Not authenticated
+  if (!session) {
+    return (
+      <DashboardShell>
+        <div className="flex items-center justify-center py-8">
+          <div className="text-center">
+            <h2 className="text-xl font-semibold">Acesso negado</h2>
+            <p className="text-gray-600">
+              Você precisa estar logado para acessar esta página.
+            </p>
+          </div>
+        </div>
+      </DashboardShell>
+    );
   }
 
   return (
@@ -243,8 +273,6 @@ export default function NovoPacientePage() {
                             disabled={(date) =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
-                            initialFocus
-                            locale={ptBR}
                           />
                         </PopoverContent>
                       </Popover>

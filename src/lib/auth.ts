@@ -1,7 +1,38 @@
-import type { NextAuthOptions } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import bcrypt from "bcryptjs"
-import { db } from "@/lib/db"
+import type { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { compare } from "bcryptjs"; // ✅ Só importe o que usar
+import { db } from "@/lib/db";
+
+// ✅ Adicione tipagem customizada
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      email: string;
+      name: string;
+      role: string;
+      tenantId: string;
+      tenant: any;
+    };
+  }
+
+  interface User {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+    tenantId: string;
+    tenant: any;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    role: string;
+    tenantId: string;
+    tenant: any;
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -16,7 +47,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.senha) {
-          return null
+          return null;
         }
 
         const usuario = await db.usuario.findUnique({
@@ -26,16 +57,17 @@ export const authOptions: NextAuthOptions = {
           include: {
             tenant: true,
           },
-        })
+        });
 
         if (!usuario || !usuario.ativo) {
-          return null
+          return null;
         }
 
-        const senhaValida = await bcrypt.compare(credentials.senha, usuario.senha)
+        // ✅ Use só compare (mais limpo)
+        const senhaValida = await compare(credentials.senha, usuario.senha);
 
         if (!senhaValida) {
-          return null
+          return null;
         }
 
         return {
@@ -45,30 +77,31 @@ export const authOptions: NextAuthOptions = {
           role: usuario.role,
           tenantId: usuario.tenantId,
           tenant: usuario.tenant,
-        }
+        };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
-        token.tenantId = user.tenantId
-        token.tenant = user.tenant
+        token.role = user.role;
+        token.tenantId = user.tenantId;
+        token.tenant = user.tenant;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.sub!
-        session.user.role = token.role as string
-        session.user.tenantId = token.tenantId as string
-        session.user.tenant = token.tenant as any
+        session.user.id = token.sub!;
+        session.user.role = token.role;
+        session.user.tenantId = token.tenantId;
+        session.user.tenant = token.tenant;
       }
-      return session
+      return session;
     },
   },
   pages: {
     signIn: "/login",
   },
-}
+  secret: process.env.NEXTAUTH_SECRET, // ✅ Adicione isso
+};

@@ -19,7 +19,7 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
-import { Input } from "@/src/components/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -27,10 +27,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Checkbox } from "@/src/components/ui/checkbox";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function CadastroPage() {
   const router = useRouter();
@@ -56,16 +56,27 @@ export default function CadastroPage() {
     setError(null);
 
     try {
-      // Em um sistema real, isso seria uma chamada à API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch("/api/auth/cadastro", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-      // Simulação de sucesso
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Erro ao cadastrar");
+      }
+
+      // Sucesso - redirecionar para página de sucesso
       router.push("/cadastro-sucesso");
     } catch (err) {
-      setError(
-        "Ocorreu um erro ao tentar fazer o cadastro. Por favor, tente novamente."
-      );
-      console.error(err);
+      const errorMessage =
+        err instanceof Error ? err.message : "Erro desconhecido";
+      setError(errorMessage);
+      console.error("Erro no cadastro:", err);
     } finally {
       setIsLoading(false);
     }
@@ -83,28 +94,34 @@ export default function CadastroPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Cadastro</CardTitle>
+            <CardTitle>Criar Conta</CardTitle>
             <CardDescription>
-              Crie sua conta para acessar o sistema
+              Preencha os dados abaixo para criar sua conta
             </CardDescription>
           </CardHeader>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <CardContent className="space-y-4">
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
+          <CardContent>
+            {error && (
+              <Alert className="mb-4" variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <FormField
                   control={form.control}
                   name="nome"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nome completo</FormLabel>
+                      <FormLabel>Nome Completo</FormLabel>
                       <FormControl>
-                        <Input placeholder="Dr. João Silva" {...field} />
+                        <Input
+                          placeholder="Digite seu nome completo"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -119,8 +136,8 @@ export default function CadastroPage() {
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="seu.email@exemplo.com"
                           type="email"
+                          placeholder="seu@email.com"
                           {...field}
                         />
                       </FormControl>
@@ -136,10 +153,10 @@ export default function CadastroPage() {
                     <FormItem>
                       <FormLabel>CRP</FormLabel>
                       <FormControl>
-                        <Input placeholder="XX/XXXXX" {...field} />
+                        <Input placeholder="Ex: 06/12345" {...field} />
                       </FormControl>
                       <FormDescription>
-                        Formato: XX/XXXXX (ex: 06/12345)
+                        Formato: XX/XXXXX (região/número)
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -152,31 +169,28 @@ export default function CadastroPage() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Senha</FormLabel>
-                      <div className="relative">
-                        <FormControl>
+                      <FormControl>
+                        <div className="relative">
                           <Input
                             type={showPassword ? "text" : "password"}
-                            placeholder="••••••••"
-                            className="pr-10"
+                            placeholder="Digite sua senha"
                             {...field}
                           />
-                        </FormControl>
-                        <button
-                          type="button"
-                          className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
-                          onClick={() => setShowPassword(!showPassword)}
-                        >
-                          {showPassword ? (
-                            <EyeOffIcon className="h-4 w-4" />
-                          ) : (
-                            <EyeIcon className="h-4 w-4" />
-                          )}
-                          <span className="sr-only">
-                            {showPassword ? "Esconder senha" : "Mostrar senha"}
-                          </span>
-                        </button>
-                      </div>
-                      <FormDescription>Mínimo de 6 caracteres</FormDescription>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </div>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -187,35 +201,31 @@ export default function CadastroPage() {
                   name="confirmarSenha"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirmar senha</FormLabel>
-                      <div className="relative">
-                        <FormControl>
+                      <FormLabel>Confirmar Senha</FormLabel>
+                      <FormControl>
+                        <div className="relative">
                           <Input
                             type={showConfirmPassword ? "text" : "password"}
-                            placeholder="••••••••"
-                            className="pr-10"
+                            placeholder="Confirme sua senha"
                             {...field}
                           />
-                        </FormControl>
-                        <button
-                          type="button"
-                          className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
-                          onClick={() =>
-                            setShowConfirmPassword(!showConfirmPassword)
-                          }
-                        >
-                          {showConfirmPassword ? (
-                            <EyeOffIcon className="h-4 w-4" />
-                          ) : (
-                            <EyeIcon className="h-4 w-4" />
-                          )}
-                          <span className="sr-only">
-                            {showConfirmPassword
-                              ? "Esconder senha"
-                              : "Mostrar senha"}
-                          </span>
-                        </button>
-                      </div>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            onClick={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                          >
+                            {showConfirmPassword ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </div>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -225,7 +235,7 @@ export default function CadastroPage() {
                   control={form.control}
                   name="termos"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                       <FormControl>
                         <Checkbox
                           checked={field.value}
@@ -234,19 +244,19 @@ export default function CadastroPage() {
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <FormLabel>
-                          Eu concordo com os{" "}
+                          Aceito os{" "}
                           <Link
                             href="/termos"
-                            className="text-primary hover:underline"
+                            className="text-primary underline-offset-4 hover:underline"
                           >
-                            Termos de Serviço
+                            termos de uso
                           </Link>{" "}
                           e{" "}
                           <Link
                             href="/privacidade"
-                            className="text-primary hover:underline"
+                            className="text-primary underline-offset-4 hover:underline"
                           >
-                            Política de Privacidade
+                            política de privacidade
                           </Link>
                         </FormLabel>
                         <FormMessage />
@@ -254,20 +264,31 @@ export default function CadastroPage() {
                     </FormItem>
                   )}
                 />
-              </CardContent>
-              <CardFooter className="flex flex-col space-y-4">
+
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Cadastrando..." : "Cadastrar"}
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Criando conta...
+                    </>
+                  ) : (
+                    "Criar Conta"
+                  )}
                 </Button>
-                <p className="text-center text-sm text-muted-foreground">
-                  Já tem uma conta?{" "}
-                  <Link href="/login" className="text-primary hover:underline">
-                    Faça login
-                  </Link>
-                </p>
-              </CardFooter>
-            </form>
-          </Form>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <p className="text-sm text-muted-foreground">
+              Já tem uma conta?{" "}
+              <Link
+                href="/login"
+                className="text-primary underline-offset-4 hover:underline"
+              >
+                Fazer login
+              </Link>
+            </p>
+          </CardFooter>
         </Card>
       </div>
     </div>

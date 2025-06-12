@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server"
-import { z } from "zod"
-import { getTenantIdFromRequest } from "@/lib/auth"
-import { createPaciente, getPacientes } from "@/lib/services/paciente-service"
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { z } from "zod";
+import { authOptions } from "@/lib/auth";
+import { createPaciente, getPacientes } from "@/lib/services/paciente-service";
 
 // Esquema de validação para pacientes
 const pacienteSchema = z.object({
@@ -12,66 +13,91 @@ const pacienteSchema = z.object({
   genero: z.string().optional().nullable(),
   endereco: z.string().optional().nullable(),
   observacoes: z.string().optional().nullable(),
-  usuarioId: z.string(),
-  tenantId: z.string(),
-})
+});
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
-    // Obter o ID do tenant do token JWT
-    const tenantId = getTenantIdFromRequest(req)
+    const session = await getServerSession(authOptions);
 
-    if (!tenantId) {
-      return NextResponse.json({ success: false, message: "Não autorizado" }, { status: 401 })
+    if (!session?.user) {
+      return NextResponse.json(
+        { success: false, message: "Não autorizado" },
+        { status: 401 }
+      );
     }
 
     // Obter pacientes do tenant específico
-    const pacientes = await getPacientes(tenantId)
+    const pacientes = await getPacientes(session.user.tenantId);
 
     return NextResponse.json({
       success: true,
       data: pacientes,
-    })
+    });
   } catch (error) {
-    console.error("Erro ao buscar pacientes:", error)
-    return NextResponse.json({ success: false, message: "Erro interno do servidor" }, { status: 500 })
+    console.error("Erro ao buscar pacientes:", error);
+    return NextResponse.json(
+      { success: false, message: "Erro interno do servidor" },
+      { status: 500 }
+    );
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json()
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+      return NextResponse.json(
+        { success: false, message: "Não autorizado" },
+        { status: 401 }
+      );
+    }
+
+    const body = await request.json();
 
     // Validar os dados de entrada
-    const validatedData = pacienteSchema.parse(body)
+    const validatedData = pacienteSchema.parse(body);
 
-    // Obter o ID do tenant do token JWT
-    const tenantId = getTenantIdFromRequest(req)
-
-    if (!tenantId) {
-      return NextResponse.json({ success: false, message: "Não autorizado" }, { status: 401 })
-    }
+    // Normalizar os dados opcionais para remover undefined
+    const normalizedData = {
+      nome: validatedData.nome,
+      email: validatedData.email ?? null,
+      telefone: validatedData.telefone ?? null,
+      genero: validatedData.genero ?? null,
+      endereco: validatedData.endereco ?? null,
+      observacoes: validatedData.observacoes ?? null,
+      dataNascimento: new Date(validatedData.dataNascimento),
+    };
 
     // Criar novo paciente
     const novoPaciente = await createPaciente({
-      ...validatedData,
-      tenantId,
-      dataNascimento: new Date(validatedData.dataNascimento),
-    })
+      ...normalizedData,
+      usuarioId: session.user.id,
+      tenantId: session.user.tenantId,
+      ativo: true,
+    });
 
     return NextResponse.json({
       success: true,
       data: novoPaciente,
-    })
+      message: "Paciente criado com sucesso",
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, message: "Dados de entrada inválidos", errors: error.errors },
-        { status: 400 },
-      )
+        {
+          success: false,
+          message: "Dados de entrada inválidos",
+          errors: error.errors,
+        },
+        { status: 400 }
+      );
     }
 
-    console.error("Erro ao criar paciente:", error)
-    return NextResponse.json({ success: false, message: "Erro interno do servidor" }, { status: 500 })
+    console.error("Erro ao criar paciente:", error);
+    return NextResponse.json(
+      { success: false, message: "Erro interno do servidor" },
+      { status: 500 }
+    );
   }
 }

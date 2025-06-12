@@ -1,8 +1,8 @@
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
-import { Card, CardContent } from "@/src/components/ui/card";
-import { Skeleton } from "@/src/components/ui/skeleton";
-import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function ProntuarioLoading() {
   return (

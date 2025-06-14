@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "sonner"; // ✅ Importar o Sonner
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -32,11 +33,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const pacienteSchema = z.object({
   nome: z.string().min(3, {
@@ -68,11 +66,10 @@ type PacienteFormValues = z.infer<typeof pacienteSchema>;
 
 export default function NovoPacientePage() {
   const router = useRouter();
-  const { data: session, status } = useSession(); // ✅ NextAuth
-  const user = session?.user; // ✅ User do NextAuth
+  const { data: session, status } = useSession();
+  const user = session?.user;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<PacienteFormValues>({
     resolver: zodResolver(pacienteSchema),
@@ -88,12 +85,11 @@ export default function NovoPacientePage() {
 
   async function onSubmit(data: PacienteFormValues) {
     if (!user) {
-      setError("Você precisa estar autenticado para cadastrar um paciente");
+      toast.error("Você precisa estar autenticado para cadastrar um paciente");
       return;
     }
 
     setIsLoading(true);
-    setError(null);
 
     try {
       const response = await fetch("/api/pacientes", {
@@ -104,32 +100,58 @@ export default function NovoPacientePage() {
         body: JSON.stringify({
           ...data,
           dataNascimento: data.dataNascimento.toISOString(),
-          usuarioId: user.id,
-          tenantId: user.tenantId, // ✅ TenantId do NextAuth
         }),
       });
 
       const responseData = await response.json();
 
-      if (!response.ok) {
-        throw new Error(responseData.message || "Erro ao cadastrar paciente");
+      if (!response.ok || !responseData.success) {
+        // ✅ Tratar erros de validação específicos
+        if (responseData.errors) {
+          Object.entries(responseData.errors).forEach(
+            ([field, messages]: [string, any]) => {
+              const fieldNames: Record<string, string> = {
+                nome: "Nome",
+                email: "Email",
+                telefone: "Telefone",
+                dataNascimento: "Data de Nascimento",
+                genero: "Gênero",
+                endereco: "Endereço",
+                observacoes: "Observações",
+              };
+
+              messages.forEach((message: string) => {
+                toast.error(`${fieldNames[field] || field}: ${message}`);
+              });
+            }
+          );
+        } else {
+          // Erro genérico
+          toast.error(responseData.message || "Erro ao cadastrar paciente");
+        }
+        return;
       }
 
-      router.push("/pacientes");
-      router.refresh();
+      // ✅ Sucesso
+      toast.success("Paciente cadastrado com sucesso!");
+
+      // Limpar formulário
+      form.reset();
+
+      // Redirecionar após um pequeno delay para o usuário ver a mensagem
+      setTimeout(() => {
+        router.push("/pacientes");
+        router.refresh();
+      }, 1500);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Ocorreu um erro ao tentar cadastrar o paciente"
-      );
       console.error(err);
+      toast.error("Erro de conexão. Tente novamente.");
     } finally {
       setIsLoading(false);
     }
   }
 
-  // ✅ Loading state
+  // Loading state
   if (status === "loading") {
     return (
       <DashboardShell>
@@ -140,7 +162,7 @@ export default function NovoPacientePage() {
     );
   }
 
-  // ✅ Not authenticated
+  // Not authenticated
   if (!session) {
     return (
       <DashboardShell>
@@ -171,12 +193,6 @@ export default function NovoPacientePage() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <CardContent className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <FormField
                   control={form.control}
@@ -338,6 +354,7 @@ export default function NovoPacientePage() {
                 variant="outline"
                 type="button"
                 onClick={() => router.back()}
+                disabled={isLoading}
               >
                 Cancelar
               </Button>

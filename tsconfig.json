@@ -1,28 +1,41 @@
 {
   "compilerOptions": {
+    // --- Configurações Base e de Alvo ---
+    "target": "es2020",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "target": "ES6",
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // --- Módulos ---
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+
+    // --- Emissão ---
+    "noEmit": true,
+
+    // --- Interoperabilidade e JSX ---
+    "esModuleInterop": true,
     "jsx": "preserve",
+
+    // --- Avançado e Next.js ---
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "baseUrl": ".",
+    "plugins": [{ "name": "next" }],
+
+    // --- Aliases (Resolução de Caminhos) ---
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["*"]
+      // Exemplo de uso:
+      // import { Sidebar } from "@/components/sidebar"
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+    // Adicione aqui outras pastas que desejar excluir, como "scripts" se não usar TypeScript nelas
+  ]
 }

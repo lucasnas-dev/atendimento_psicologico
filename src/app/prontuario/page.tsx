@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/src/components/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -7,12 +7,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
+} from "@/components/ui/table";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
 import { FileText, Plus, Search, Filter, Download } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "@/src/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,

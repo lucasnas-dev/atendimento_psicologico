@@ -1,4 +1,4 @@
-import * as z from "zod"
+import * as z from "zod";
 
 export const anotacaoSchema = z.object({
   pacienteId: z.string({
@@ -16,6 +16,6 @@ export const anotacaoSchema = z.object({
   tipo: z.enum(["sessao", "evolucao", "encaminhamento", "outro"], {
     required_error: "Tipo é obrigatório",
   }),
-})
+});
 
-export type AnotacaoFormValues = z.infer<typeof anotacaoSchema>
+export type AnotacaoFormValues = z.infer<typeof anotacaoSchema>;

@@ -143,7 +143,7 @@ export function Paginacao({ paginacao, controles }: PaginacaoProps) {
         {/* Indicador de página atual */}
         <div className="flex items-center gap-1 text-sm font-medium">
           <span>Página</span>
-          <span className="bg-primary text-primary-foreground px-2 py-1 rounded">
+          <span className="rounded bg-primary px-2 py-1 text-primary-foreground">
             {paginaAtual}
           </span>
           <span>de {totalPaginas}</span>

@@ -23,7 +23,7 @@ export default function CadastroSucessoPage() {
 
         <Card>
           <CardHeader>
-            <div className="flex justify-center mb-4">
+            <div className="mb-4 flex justify-center">
               <CheckCircle2 className="h-16 w-16 text-green-500" />
             </div>
             <CardTitle className="text-center text-2xl">

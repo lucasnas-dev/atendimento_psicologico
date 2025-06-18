@@ -1,4 +1,4 @@
-import * as z from "zod"
+import * as z from "zod";
 
 export const pacienteSchema = z.object({
   nome: z.string().min(3, {
@@ -37,6 +37,6 @@ export const pacienteSchema = z.object({
       message: "CEP deve ter 8 dígitos",
     }),
   }),
-})
+});
 
-export type PacienteFormValues = z.infer<typeof pacienteSchema>
+export type PacienteFormValues = z.infer<typeof pacienteSchema>;

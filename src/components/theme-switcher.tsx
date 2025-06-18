@@ -1,22 +1,27 @@
-"use client"
+"use client";
 
-import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { Check, Monitor, Moon, Sun, Palette } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { useEffect, useState } from "react"
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { Check, Monitor, Moon, Sun, Palette } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useEffect, useState } from "react";
 
 export function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   // Evita problemas de hidratação
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
-    return null
+    return null;
   }
 
   return (
@@ -56,5 +61,5 @@ export function ThemeSwitcher() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

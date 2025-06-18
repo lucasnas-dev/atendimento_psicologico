@@ -6,17 +6,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
 import { Clock, Plus, Video } from "lucide-react";
 import Link from "next/link";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { Badge } from "@/src/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 export default function ConsultasPage() {
   return (

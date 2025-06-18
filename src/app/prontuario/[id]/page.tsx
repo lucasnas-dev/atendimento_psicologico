@@ -9,7 +9,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
 import {
@@ -21,16 +21,11 @@ import {
   Calendar,
   AlertCircle,
 } from "lucide-react";
-import { Separator } from "@/src/components/ui/separator";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/src/components/ui/tabs";
-import { Badge } from "@/src/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/src/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -38,13 +33,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { Checkbox } from "@/src/components/ui/checkbox";
+} from "@/components/ui/select";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Checkbox } from "@/components/ui/checkbox";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -235,7 +226,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
       {/* Cabeçalho do Prontuário */}
       <Card className="mb-6">
         <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
+          <div className="flex flex-col items-start gap-6 md:flex-row">
             <Avatar className="h-24 w-24">
               <AvatarImage
                 src={`/placeholder.svg?height=96&width=96`}
@@ -254,7 +245,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                 <h2 className="text-2xl font-bold">{paciente.nome}</h2>
                 <Badge>Prontuário Ativo</Badge>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <p className="text-sm text-muted-foreground">
                     CPF: {paciente.cpf}
@@ -329,7 +320,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="space-y-4">
                   {editMode ? (
                     <>
@@ -522,7 +513,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                 <h3 className="text-lg font-medium">
                   Informações do Atendimento
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <div className="space-y-4">
                     {editMode ? (
                       <>
@@ -659,7 +650,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                     />
                   </div>
                 ) : (
-                  <div className="rounded-md border p-4 bg-muted/20">
+                  <div className="rounded-md border bg-muted/20 p-4">
                     <p>{paciente.demandaInicial}</p>
                   </div>
                 )}
@@ -744,50 +735,50 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
               ) : (
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       Queixa Principal
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
+                    <div className="rounded-md border bg-muted/20 p-4">
                       <p>{paciente.avaliacaoInicial.queixaPrincipal}</p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       História Clínica
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
+                    <div className="rounded-md border bg-muted/20 p-4">
                       <p>{paciente.avaliacaoInicial.historiaClinica}</p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       Histórico Familiar
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
+                    <div className="rounded-md border bg-muted/20 p-4">
                       <p>{paciente.avaliacaoInicial.historicoFamiliar}</p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       Exame do Estado Mental
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
+                    <div className="rounded-md border bg-muted/20 p-4">
                       <p>{paciente.avaliacaoInicial.exameEstadoMental}</p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       Hipótese Diagnóstica
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
+                    <div className="rounded-md border bg-muted/20 p-4">
                       <p>{paciente.avaliacaoInicial.hipoteseDiagnostica}</p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       Impressão Geral
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
+                    <div className="rounded-md border bg-muted/20 p-4">
                       <p>{paciente.avaliacaoInicial.impressaoGeral}</p>
                     </div>
                   </div>
@@ -868,7 +859,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                       </Button>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="frequencia">Frequência</Label>
                       <Select
@@ -926,19 +917,19 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
               ) : (
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       Abordagem Terapêutica
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
+                    <div className="rounded-md border bg-muted/20 p-4">
                       <p>{paciente.planoTerapeutico.abordagem}</p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       Objetivos Terapêuticos
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
-                      <ul className="list-disc pl-5 space-y-1">
+                    <div className="rounded-md border bg-muted/20 p-4">
+                      <ul className="list-disc space-y-1 pl-5">
                         {paciente.planoTerapeutico.objetivos.map(
                           (objetivo, index) => (
                             <li key={index}>{objetivo}</li>
@@ -947,27 +938,27 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                       </ul>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Frequência</h3>
-                      <div className="rounded-md border p-4 bg-muted/20">
+                      <h3 className="mb-2 text-lg font-medium">Frequência</h3>
+                      <div className="rounded-md border bg-muted/20 p-4">
                         <p>{paciente.planoTerapeutico.frequencia}</p>
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium mb-2">
+                      <h3 className="mb-2 text-lg font-medium">
                         Duração da Sessão
                       </h3>
-                      <div className="rounded-md border p-4 bg-muted/20">
+                      <div className="rounded-md border bg-muted/20 p-4">
                         <p>{paciente.planoTerapeutico.duracao}</p>
                       </div>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium mb-2">
+                    <h3 className="mb-2 text-lg font-medium">
                       Período para Reavaliação
                     </h3>
-                    <div className="rounded-md border p-4 bg-muted/20">
+                    <div className="rounded-md border bg-muted/20 p-4">
                       <p>{paciente.planoTerapeutico.reavaliacao}</p>
                     </div>
                   </div>
@@ -997,7 +988,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                   {paciente.evolucao.map((item, index) => (
                     <div
                       key={index}
-                      className="space-y-2 border p-4 rounded-md"
+                      className="space-y-2 rounded-md border p-4"
                     >
                       <div className="flex items-center justify-between">
                         <Label htmlFor={`data-${index}`}>Data</Label>
@@ -1021,8 +1012,8 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
               ) : (
                 <div className="space-y-4">
                   {paciente.evolucao.map((item, index) => (
-                    <div key={index} className="border rounded-md p-4">
-                      <div className="flex items-center gap-2 mb-2">
+                    <div key={index} className="rounded-md border p-4">
+                      <div className="mb-2 flex items-center gap-2">
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                         <p className="font-medium">{item.data}</p>
                       </div>
@@ -1058,7 +1049,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                   {paciente.registroSessoes.map((sessao, index) => (
                     <div
                       key={index}
-                      className="space-y-4 border p-4 rounded-md"
+                      className="space-y-4 rounded-md border p-4"
                     >
                       <div className="flex items-center justify-between">
                         <h3 className="font-medium">Sessão #{sessao.id}</h3>
@@ -1066,7 +1057,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                           Remover
                         </Button>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                         <div className="space-y-2">
                           <Label htmlFor={`data-${index}`}>Data</Label>
                           <Input
@@ -1092,7 +1083,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                           />
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div className="space-y-2">
                           <Label htmlFor={`tipo-${index}`}>
                             Tipo de Sessão
@@ -1175,8 +1166,8 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
               ) : (
                 <div className="space-y-6">
                   {paciente.registroSessoes.map((sessao, index) => (
-                    <div key={index} className="border rounded-md p-4">
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                    <div key={index} className="rounded-md border p-4">
+                      <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
                         <div className="flex items-center gap-2">
                           <Badge
                             variant={
@@ -1187,7 +1178,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                           </Badge>
                           <h3 className="font-medium">Sessão #{sessao.id}</h3>
                         </div>
-                        <div className="flex items-center gap-4 mt-2 md:mt-0">
+                        <div className="mt-2 flex items-center gap-4 md:mt-0">
                           <div className="flex items-center gap-1">
                             <Calendar className="h-4 w-4 text-muted-foreground" />
                             <span className="text-sm text-muted-foreground">
@@ -1202,7 +1193,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                           </div>
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                           <h4 className="text-sm font-medium text-muted-foreground">
                             Tipo de Sessão
@@ -1264,7 +1255,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                   {paciente.encaminhamentos.map((encaminhamento, index) => (
                     <div
                       key={index}
-                      className="space-y-2 border p-4 rounded-md"
+                      className="space-y-2 rounded-md border p-4"
                     >
                       <div className="flex items-center justify-between">
                         <Label htmlFor={`data-enc-${index}`}>Data</Label>
@@ -1276,7 +1267,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                         id={`data-enc-${index}`}
                         defaultValue={encaminhamento.data}
                       />
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div className="space-y-2">
                           <Label htmlFor={`profissional-${index}`}>
                             Profissional
@@ -1323,12 +1314,12 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
               ) : (
                 <div className="space-y-4">
                   {paciente.encaminhamentos.map((encaminhamento, index) => (
-                    <div key={index} className="border rounded-md p-4">
-                      <div className="flex items-center gap-2 mb-2">
+                    <div key={index} className="rounded-md border p-4">
+                      <div className="mb-2 flex items-center gap-2">
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                         <p className="font-medium">{encaminhamento.data}</p>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                           <h4 className="text-sm font-medium text-muted-foreground">
                             Profissional
@@ -1476,7 +1467,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
       {/* Rodapé do Prontuário */}
       <Card className="mt-6">
         <CardContent className="p-4">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
             <div className="text-sm text-muted-foreground">
               <p>
                 Este prontuário segue as diretrizes da Resolução CFP Nº 13/2022

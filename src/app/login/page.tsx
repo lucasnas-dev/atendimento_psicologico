@@ -164,7 +164,7 @@ export default function LoginPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="w-full mt-2"
+                  className="mt-2 w-full"
                   onClick={() => {
                     form.setValue("email", "psicologo@exemplo.com");
                     form.setValue("senha", "senha123");
@@ -173,8 +173,8 @@ export default function LoginPage() {
                   Preencher com credenciais de teste
                 </Button>
               </CardContent>
-              <div className="mt-4 p-3 bg-muted rounded-md">
-                <p className="text-sm font-medium mb-1">
+              <div className="mt-4 rounded-md bg-muted p-3">
+                <p className="mb-1 text-sm font-medium">
                   Credenciais de teste:
                 </p>
                 <p className="text-sm text-muted-foreground">

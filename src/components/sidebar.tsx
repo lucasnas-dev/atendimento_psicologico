@@ -10,7 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/src/components/ui/sidebar";
+} from "@/components/ui/sidebar";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import {
   Users,
@@ -22,11 +22,7 @@ import {
   Home,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 
 export function AppSidebar() {
@@ -93,10 +89,10 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="border-b px-4 py-6">
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground">
             P
           </div>
-          <div className="font-semibold text-xl">PsiAten</div>
+          <div className="text-xl font-semibold">PsiAten</div>
         </div>
       </SidebarHeader>
       <SidebarContent>

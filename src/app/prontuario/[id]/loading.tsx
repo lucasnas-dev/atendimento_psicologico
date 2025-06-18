@@ -1,7 +1,7 @@
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
-import { Skeleton } from "@/src/components/ui/skeleton";
-import { Card, CardContent } from "@/src/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function ProntuarioLoading() {
   return (
@@ -19,11 +19,11 @@ export default function ProntuarioLoading() {
 
       <Card className="mb-6">
         <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
+          <div className="flex flex-col items-start gap-6 md:flex-row">
             <Skeleton className="h-24 w-24 rounded-full" />
             <div className="flex-1 space-y-4">
               <Skeleton className="h-8 w-[250px]" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <Skeleton className="h-4 w-[200px]" />
                   <Skeleton className="h-4 w-[250px]" />
@@ -50,7 +50,7 @@ export default function ProntuarioLoading() {
           <CardContent className="p-6">
             <div className="space-y-6">
               <Skeleton className="h-6 w-[200px]" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="space-y-4">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Skeleton key={i} className="h-16 w-full" />

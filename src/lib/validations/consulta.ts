@@ -1,4 +1,4 @@
-import * as z from "zod"
+import * as z from "zod";
 
 export const consultaSchema = z.object({
   pacienteId: z.string({
@@ -24,6 +24,6 @@ export const consultaSchema = z.object({
     required_error: "Tipo é obrigatório",
   }),
   observacoes: z.string().optional(),
-})
+});
 
-export type ConsultaFormValues = z.infer<typeof consultaSchema>
+export type ConsultaFormValues = z.infer<typeof consultaSchema>;

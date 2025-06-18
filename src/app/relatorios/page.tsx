@@ -8,22 +8,17 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/src/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
+} from "@/components/ui/select";
 import { BarChart, LineChart, PieChart, Download, Filter } from "lucide-react";
 import {
   DropdownMenu,
@@ -64,7 +59,7 @@ export default function RelatoriosPage() {
           <CardContent>
             <div className="flex flex-wrap gap-4">
               <div className="w-full sm:w-auto">
-                <label className="text-sm font-medium mb-1 block">
+                <label className="mb-1 block text-sm font-medium">
                   Período
                 </label>
                 <Select
@@ -87,7 +82,7 @@ export default function RelatoriosPage() {
               </div>
 
               <div className="w-full sm:w-auto">
-                <label className="text-sm font-medium mb-1 block">
+                <label className="mb-1 block text-sm font-medium">
                   Tipo de Gráfico
                 </label>
                 <div className="flex gap-2">
@@ -115,8 +110,8 @@ export default function RelatoriosPage() {
                 </div>
               </div>
 
-              <div className="w-full sm:w-auto ml-auto">
-                <label className="text-sm font-medium mb-1 block">
+              <div className="ml-auto w-full sm:w-auto">
+                <label className="mb-1 block text-sm font-medium">
                   Mais Filtros
                 </label>
                 <DropdownMenu>
@@ -161,15 +156,15 @@ export default function RelatoriosPage() {
                     {periodoSelecionado === "mes"
                       ? "Abril 2025"
                       : periodoSelecionado === "semana"
-                      ? "Última Semana"
-                      : periodoSelecionado === "trimestre"
-                      ? "Último Trimestre"
-                      : "Último Ano"}
+                        ? "Última Semana"
+                        : periodoSelecionado === "trimestre"
+                          ? "Último Trimestre"
+                          : "Último Ano"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">78</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-green-500">↑ 12%</span> em relação ao
                     período anterior
                   </p>
@@ -185,7 +180,7 @@ export default function RelatoriosPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">92%</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-green-500">↑ 3%</span> em relação ao
                     período anterior
                   </p>
@@ -199,7 +194,7 @@ export default function RelatoriosPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">52 min</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-gray-500">→ 0%</span> em relação ao
                     período anterior
                   </p>
@@ -213,17 +208,17 @@ export default function RelatoriosPage() {
                     {periodoSelecionado === "mes"
                       ? "Por dia da semana"
                       : periodoSelecionado === "semana"
-                      ? "Por dia"
-                      : periodoSelecionado === "trimestre"
-                      ? "Por semana"
-                      : "Por mês"}
+                        ? "Por dia"
+                        : periodoSelecionado === "trimestre"
+                          ? "Por semana"
+                          : "Por mês"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="h-80">
-                  <div className="h-full w-full flex items-center justify-center bg-muted/20 rounded-md">
+                  <div className="flex h-full w-full items-center justify-center rounded-md bg-muted/20">
                     {tipoGrafico === "barras" && (
                       <div className="text-center">
-                        <BarChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <BarChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Barras - Atendimentos por Período
                         </p>
@@ -231,7 +226,7 @@ export default function RelatoriosPage() {
                     )}
                     {tipoGrafico === "linhas" && (
                       <div className="text-center">
-                        <LineChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <LineChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Linhas - Atendimentos por Período
                         </p>
@@ -239,7 +234,7 @@ export default function RelatoriosPage() {
                     )}
                     {tipoGrafico === "pizza" && (
                       <div className="text-center">
-                        <PieChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <PieChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Pizza - Atendimentos por Período
                         </p>
@@ -261,15 +256,15 @@ export default function RelatoriosPage() {
                     {periodoSelecionado === "mes"
                       ? "Abril 2025"
                       : periodoSelecionado === "semana"
-                      ? "Última Semana"
-                      : periodoSelecionado === "trimestre"
-                      ? "Último Trimestre"
-                      : "Último Ano"}
+                        ? "Última Semana"
+                        : periodoSelecionado === "trimestre"
+                          ? "Último Trimestre"
+                          : "Último Ano"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">8</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-green-500">↑ 33%</span> em relação ao
                     período anterior
                   </p>
@@ -285,7 +280,7 @@ export default function RelatoriosPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">42</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-green-500">↑ 5%</span> em relação ao
                     período anterior
                   </p>
@@ -303,7 +298,7 @@ export default function RelatoriosPage() {
                   <div className="text-4xl font-bold">
                     7.2 <span className="text-2xl">meses</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-gray-500">→ 0%</span> em relação ao
                     período anterior
                   </p>
@@ -316,10 +311,10 @@ export default function RelatoriosPage() {
                   <CardDescription>Por faixa etária e gênero</CardDescription>
                 </CardHeader>
                 <CardContent className="h-80">
-                  <div className="h-full w-full flex items-center justify-center bg-muted/20 rounded-md">
+                  <div className="flex h-full w-full items-center justify-center rounded-md bg-muted/20">
                     {tipoGrafico === "barras" && (
                       <div className="text-center">
-                        <BarChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <BarChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Barras - Distribuição de Pacientes
                         </p>
@@ -327,7 +322,7 @@ export default function RelatoriosPage() {
                     )}
                     {tipoGrafico === "linhas" && (
                       <div className="text-center">
-                        <LineChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <LineChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Linhas - Evolução de Pacientes
                         </p>
@@ -335,7 +330,7 @@ export default function RelatoriosPage() {
                     )}
                     {tipoGrafico === "pizza" && (
                       <div className="text-center">
-                        <PieChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <PieChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Pizza - Distribuição por Gênero
                         </p>
@@ -384,7 +379,7 @@ export default function RelatoriosPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">28%</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-green-500">↑ 7%</span> em relação ao
                     período anterior
                   </p>
@@ -400,7 +395,7 @@ export default function RelatoriosPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">312</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-green-500">↑ 18%</span> em relação ao
                     período anterior
                   </p>
@@ -415,10 +410,10 @@ export default function RelatoriosPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="h-80">
-                  <div className="h-full w-full flex items-center justify-center bg-muted/20 rounded-md">
+                  <div className="flex h-full w-full items-center justify-center rounded-md bg-muted/20">
                     {tipoGrafico === "barras" && (
                       <div className="text-center">
-                        <BarChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <BarChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Barras - Evolução por Indicador
                         </p>
@@ -426,7 +421,7 @@ export default function RelatoriosPage() {
                     )}
                     {tipoGrafico === "linhas" && (
                       <div className="text-center">
-                        <LineChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <LineChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Linhas - Evolução ao Longo do Tempo
                         </p>
@@ -434,7 +429,7 @@ export default function RelatoriosPage() {
                     )}
                     {tipoGrafico === "pizza" && (
                       <div className="text-center">
-                        <PieChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <PieChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Pizza - Distribuição de Indicadores
                         </p>
@@ -456,15 +451,15 @@ export default function RelatoriosPage() {
                     {periodoSelecionado === "mes"
                       ? "Abril 2025"
                       : periodoSelecionado === "semana"
-                      ? "Última Semana"
-                      : periodoSelecionado === "trimestre"
-                      ? "Último Trimestre"
-                      : "Último Ano"}
+                        ? "Última Semana"
+                        : periodoSelecionado === "trimestre"
+                          ? "Último Trimestre"
+                          : "Último Ano"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">R$ 15.600</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-green-500">↑ 12%</span> em relação ao
                     período anterior
                   </p>
@@ -480,7 +475,7 @@ export default function RelatoriosPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">R$ 200</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-green-500">↑ 5%</span> em relação ao
                     período anterior
                   </p>
@@ -494,7 +489,7 @@ export default function RelatoriosPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-4xl font-bold">3.2%</div>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="mt-2 text-sm text-muted-foreground">
                     <span className="text-red-500">↑ 0.5%</span> em relação ao
                     período anterior
                   </p>
@@ -509,10 +504,10 @@ export default function RelatoriosPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="h-80">
-                  <div className="h-full w-full flex items-center justify-center bg-muted/20 rounded-md">
+                  <div className="flex h-full w-full items-center justify-center rounded-md bg-muted/20">
                     {tipoGrafico === "barras" && (
                       <div className="text-center">
-                        <BarChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <BarChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Barras - Faturamento por Período
                         </p>
@@ -520,7 +515,7 @@ export default function RelatoriosPage() {
                     )}
                     {tipoGrafico === "linhas" && (
                       <div className="text-center">
-                        <LineChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <LineChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Linhas - Evolução do Faturamento
                         </p>
@@ -528,7 +523,7 @@ export default function RelatoriosPage() {
                     )}
                     {tipoGrafico === "pizza" && (
                       <div className="text-center">
-                        <PieChart className="h-16 w-16 mx-auto text-muted-foreground" />
+                        <PieChart className="mx-auto h-16 w-16 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">
                           Gráfico de Pizza - Distribuição de Receitas
                         </p>

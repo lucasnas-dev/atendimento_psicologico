@@ -4,7 +4,7 @@ import type React from "react";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/src/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Card,
@@ -13,7 +13,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { Mail, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -72,7 +72,7 @@ export default function RecuperarSenhaPage() {
               )}
 
               {success && (
-                <Alert className="border-green-500 text-green-700 bg-green-50">
+                <Alert className="border-green-500 bg-green-50 text-green-700">
                   <AlertDescription>
                     Email de recuperação enviado com sucesso! Verifique sua
                     caixa de entrada e siga as instruções para redefinir sua

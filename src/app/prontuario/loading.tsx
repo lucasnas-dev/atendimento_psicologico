@@ -1,6 +1,6 @@
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
-import { Skeleton } from "@/src/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 

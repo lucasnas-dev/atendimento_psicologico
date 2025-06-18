@@ -1,4 +1,4 @@
-import * as z from "zod"
+import * as z from "zod";
 
 export const prontuarioSchema = z.object({
   pacienteId: z.string({
@@ -17,6 +17,6 @@ export const prontuarioSchema = z.object({
   medicacoes: z.string().optional(),
   examesMedicos: z.string().optional(),
   observacoes: z.string().optional(),
-})
+});
 
-export type ProntuarioFormValues = z.infer<typeof prontuarioSchema>
+export type ProntuarioFormValues = z.infer<typeof prontuarioSchema>;

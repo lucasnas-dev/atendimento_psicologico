@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
 import { Download, Printer } from "lucide-react";
@@ -63,7 +63,7 @@ export default function ContratoTerapeuticoPage({
       </DashboardHeader>
 
       <Card className="border-2">
-        <CardHeader className="text-center border-b">
+        <CardHeader className="border-b text-center">
           <CardTitle className="text-2xl">
             CONTRATO DE PRESTAÇÃO DE SERVIÇOS PSICOLÓGICOS
           </CardTitle>
@@ -73,7 +73,7 @@ export default function ContratoTerapeuticoPage({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="p-6 space-y-6">
+        <CardContent className="space-y-6 p-6">
           <div className="space-y-4">
             <p>
               <strong>CONTRATANTE:</strong> {paciente.nome}, CPF {paciente.cpf},
@@ -184,7 +184,7 @@ export default function ContratoTerapeuticoPage({
 
         <CardFooter className="flex flex-col items-start border-t p-6">
           <p className="mb-8">São Paulo, {dataAtual}</p>
-          <div className="flex flex-col md:flex-row w-full justify-between gap-8">
+          <div className="flex w-full flex-col justify-between gap-8 md:flex-row">
             <div className="w-64 border-t border-black pt-2 text-center">
               <p>{paciente.nome}</p>
               <p>Contratante</p>

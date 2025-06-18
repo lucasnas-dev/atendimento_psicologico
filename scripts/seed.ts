@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client"
-import bcrypt from "bcryptjs"
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Iniciando seed do banco de dados...")
+  console.log("🌱 Iniciando seed do banco de dados...");
 
   // Criar tenant
   const tenant = await prisma.tenant.upsert({
@@ -16,12 +16,12 @@ async function main() {
       plano: "premium",
       ativo: true,
     },
-  })
+  });
 
-  console.log("✅ Tenant criado:", tenant.nome)
+  console.log("✅ Tenant criado:", tenant.nome);
 
   // Criar usuário administrador
-  const hashedPassword = await bcrypt.hash("senha123", 12)
+  const hashedPassword = await bcrypt.hash("senha123", 12);
   const usuario = await prisma.usuario.upsert({
     where: { email: "psicologo@exemplo.com" },
     update: {},
@@ -34,9 +34,9 @@ async function main() {
       tenantId: tenant.id,
       ativo: true,
     },
-  })
+  });
 
-  console.log("✅ Usuário criado:", usuario.nome)
+  console.log("✅ Usuário criado:", usuario.nome);
 
   // Criar pacientes de exemplo
   const pacientes = await Promise.all([
@@ -72,9 +72,9 @@ async function main() {
         usuarioId: usuario.id,
       },
     }),
-  ])
+  ]);
 
-  console.log("✅ Pacientes criados:", pacientes.length)
+  console.log("✅ Pacientes criados:", pacientes.length);
 
   // Criar prontuários
   await Promise.all(
@@ -86,21 +86,21 @@ async function main() {
           pacienteId: paciente.id,
           tenantId: tenant.id,
         },
-      }),
-    ),
-  )
+      })
+    )
+  );
 
-  console.log("✅ Prontuários criados")
+  console.log("✅ Prontuários criados");
 
   // Criar consultas de exemplo
-  const hoje = new Date()
-  const amanha = new Date(hoje)
-  amanha.setDate(hoje.getDate() + 1)
-  amanha.setHours(14, 0, 0, 0)
+  const hoje = new Date();
+  const amanha = new Date(hoje);
+  amanha.setDate(hoje.getDate() + 1);
+  amanha.setHours(14, 0, 0, 0);
 
-  const depoisDeAmanha = new Date(hoje)
-  depoisDeAmanha.setDate(hoje.getDate() + 2)
-  depoisDeAmanha.setHours(16, 0, 0, 0)
+  const depoisDeAmanha = new Date(hoje);
+  depoisDeAmanha.setDate(hoje.getDate() + 2);
+  depoisDeAmanha.setHours(16, 0, 0, 0);
 
   await Promise.all([
     prisma.consulta.create({
@@ -127,16 +127,17 @@ async function main() {
         usuarioId: usuario.id,
       },
     }),
-  ])
+  ]);
 
-  console.log("✅ Consultas criadas")
+  console.log("✅ Consultas criadas");
 
   // Criar algumas anotações
   await Promise.all([
     prisma.anotacao.create({
       data: {
         titulo: "Primeira impressão - Maria",
-        conteudo: "Paciente apresenta sinais de ansiedade generalizada. Demonstra boa disposição para o tratamento.",
+        conteudo:
+          "Paciente apresenta sinais de ansiedade generalizada. Demonstra boa disposição para o tratamento.",
         tipo: "observacao",
         tenantId: tenant.id,
         usuarioId: usuario.id,
@@ -145,15 +146,16 @@ async function main() {
     prisma.anotacao.create({
       data: {
         titulo: "Plano de tratamento - Carlos",
-        conteudo: "Iniciar com técnicas de relaxamento e mindfulness. Agendar sessões semanais.",
+        conteudo:
+          "Iniciar com técnicas de relaxamento e mindfulness. Agendar sessões semanais.",
         tipo: "geral",
         tenantId: tenant.id,
         usuarioId: usuario.id,
       },
     }),
-  ])
+  ]);
 
-  console.log("✅ Anotações criadas")
+  console.log("✅ Anotações criadas");
 
   // Criar configurações padrão
   await Promise.all([
@@ -177,17 +179,17 @@ async function main() {
         tenantId: tenant.id,
       },
     }),
-  ])
+  ]);
 
-  console.log("✅ Configurações criadas")
-  console.log("🎉 Seed concluído com sucesso!")
+  console.log("✅ Configurações criadas");
+  console.log("🎉 Seed concluído com sucesso!");
 }
 
 main()
   .catch((e) => {
-    console.error("❌ Erro durante o seed:", e)
-    process.exit(1)
+    console.error("❌ Erro durante o seed:", e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });

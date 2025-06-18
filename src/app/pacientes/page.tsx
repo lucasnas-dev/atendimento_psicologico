@@ -35,7 +35,7 @@ export default function PacientesPage() {
           text="Gerencie seus pacientes e acesse seus prontuários"
         />
         <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+          <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900"></div>
           <span className="ml-2">Carregando pacientes...</span>
         </div>
       </DashboardShell>

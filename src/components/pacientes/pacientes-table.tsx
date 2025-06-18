@@ -116,11 +116,11 @@ export function PacientesTable({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="todos">
-                <div className="flex items-center justify-between w-full">
+                <div className="flex w-full items-center justify-between">
                   <span>Todos</span>
                   <Badge
                     variant={filtroStatus === "todos" ? "default" : "secondary"}
-                    className="text-xs ml-2"
+                    className="ml-2 text-xs"
                   >
                     {contadores.total}
                   </Badge>
@@ -128,11 +128,11 @@ export function PacientesTable({
               </SelectItem>
 
               <SelectItem value="ativo">
-                <div className="flex items-center justify-between w-full">
+                <div className="flex w-full items-center justify-between">
                   <span>Ativos</span>
                   <Badge
                     variant={filtroStatus === "ativo" ? "default" : "secondary"}
-                    className="text-xs ml-2"
+                    className="ml-2 text-xs"
                   >
                     {contadores.ativos}
                   </Badge>
@@ -140,13 +140,13 @@ export function PacientesTable({
               </SelectItem>
 
               <SelectItem value="inativo">
-                <div className="flex items-center justify-between w-full">
+                <div className="flex w-full items-center justify-between">
                   <span>Arquivados</span>
                   <Badge
                     variant={
                       filtroStatus === "inativo" ? "default" : "secondary"
                     }
-                    className="text-xs ml-2"
+                    className="ml-2 text-xs"
                   >
                     {contadores.inativos}
                   </Badge>
@@ -170,12 +170,12 @@ export function PacientesTable({
             {termoBusca && (
               <Badge
                 variant="secondary"
-                className="text-xs flex items-center gap-1"
+                className="flex items-center gap-1 text-xs"
               >
                 Busca: "{termoBusca}"
                 <button
                   onClick={() => onBuscaChange("")}
-                  className="ml-1 hover:bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center text-xs"
+                  className="ml-1 flex h-4 w-4 items-center justify-center rounded-full text-xs hover:bg-gray-200"
                 >
                   ×
                 </button>
@@ -184,12 +184,12 @@ export function PacientesTable({
             {filtroStatus !== "todos" && (
               <Badge
                 variant="secondary"
-                className="text-xs flex items-center gap-1"
+                className="flex items-center gap-1 text-xs"
               >
                 Status: {filtroStatus === "ativo" ? "Ativos" : "Arquivados"}
                 <button
                   onClick={() => onFiltroChange("todos")}
-                  className="ml-1 hover:bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center text-xs"
+                  className="ml-1 flex h-4 w-4 items-center justify-center rounded-full text-xs hover:bg-gray-200"
                 >
                   ×
                 </button>
@@ -201,7 +201,7 @@ export function PacientesTable({
 
       {/* Exibir erro se houver */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
+        <div className="rounded-md border border-red-200 bg-red-50 p-4">
           <p className="text-red-600">{error}</p>
           <Button
             variant="outline"
@@ -230,14 +230,14 @@ export function PacientesTable({
           <TableBody>
             {pacientes.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-8">
+                <TableCell colSpan={6} className="py-8 text-center">
                   <div className="text-center">
                     {termoBusca || filtroStatus !== "todos" ? (
                       <>
-                        <p className="text-gray-500 mb-2">
+                        <p className="mb-2 text-gray-500">
                           Nenhum paciente encontrado com os filtros aplicados
                         </p>
-                        <div className="flex gap-2 justify-center">
+                        <div className="flex justify-center gap-2">
                           {termoBusca && (
                             <Button
                               variant="outline"
@@ -260,7 +260,7 @@ export function PacientesTable({
                       </>
                     ) : (
                       <>
-                        <p className="text-gray-500 mb-2">
+                        <p className="mb-2 text-gray-500">
                           Nenhum paciente cadastrado
                         </p>
                         <Button asChild size="sm">
@@ -283,7 +283,7 @@ export function PacientesTable({
                   <TableCell className="font-medium">{paciente.nome}</TableCell>
                   <TableCell>
                     <div className="space-y-1">
-                      <div className="font-medium text-sm">
+                      <div className="text-sm font-medium">
                         {calcularIdade(paciente.dataNascimento)} anos
                       </div>
                       <div className="text-xs text-muted-foreground">

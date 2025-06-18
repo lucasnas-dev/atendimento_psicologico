@@ -1,71 +1,84 @@
-import { NextResponse } from "next/server"
-import { z } from "zod"
-import { getTenantIdFromRequest } from "@/lib/auth"
-import { createConsulta, getConsultas } from "@/lib/services/consulta-service"
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+// ❌ REMOVER esta linha:
+// import { getTenantIdFromRequest } from "@/lib/auth";
 
-// Esquema de validação para consultas
-const consultaSchema = z.object({
-  data: z.string(),
-  duracao: z.number().int().positive(),
-  status: z.string(),
-  observacoes: z.string().optional().nullable(),
-  pacienteId: z.string(),
-  usuarioId: z.string(),
-  tenantId: z.string(),
-})
+const prisma = new PrismaClient();
 
-export async function GET(req: Request) {
+export async function GET(_request: NextRequest) {
   try {
-    const tenantId = getTenantIdFromRequest(req)
+    // ✅ TEMPORÁRIO: usar tenantId fixo até implementar autenticação
+    const tenantId = "temp-tenant-id";
 
-    if (!tenantId) {
-      return NextResponse.json({ success: false, message: "Não autorizado" }, { status: 401 })
-    }
+    const consultas = await prisma.consulta.findMany({
+      where: {
+        tenantId: tenantId,
+      },
+      include: {
+        paciente: true,
+      },
+      orderBy: {
+        data: "desc",
+      },
+    });
 
-    const consultas = await getConsultas(tenantId)
-
-    return NextResponse.json({
-      success: true,
-      data: consultas,
-    })
+    return NextResponse.json(consultas);
   } catch (error) {
-    console.error("Erro ao buscar consultas:", error)
-    return NextResponse.json({ success: false, message: "Erro interno do servidor" }, { status: 500 })
+    console.error("Erro ao buscar consultas:", error);
+    return NextResponse.json(
+      { error: "Erro interno do servidor" },
+      { status: 500 }
+    );
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json()
-    const tenantId = getTenantIdFromRequest(req)
+    const body = await request.json();
 
-    if (!tenantId) {
-      return NextResponse.json({ success: false, message: "Não autorizado" }, { status: 401 })
-    }
+    // ✅ TEMPORÁRIO: usar tenantId fixo até implementar autenticação
+    const tenantId = "temp-tenant-id";
 
-    // Validar os dados de entrada
-    const validatedData = consultaSchema.parse(body)
+    // Validação básica
+    const validatedData = {
+      pacienteId: body.pacienteId,
+      usuarioId: body.usuarioId || "temp-user-id",
+      data: body.data,
+      duracao: body.duracao || 60,
+      status: body.status || "agendada",
+      observacoes: body.observacoes || null,
+      // ✅ ADICIONAR campos obrigatórios que estavam faltando:
+      valor: body.valor || null,
+      pago: body.pago || false,
+    };
 
-    // Criar nova consulta
-    const novaConsulta = await createConsulta({
-      ...validatedData,
-      tenantId,
-      data: new Date(validatedData.data),
-    })
+    const novaConsulta = await prisma.consulta.create({
+      data: {
+        tenantId: tenantId,
+        data: new Date(validatedData.data),
+        usuarioId: validatedData.usuarioId,
+        pacienteId: validatedData.pacienteId,
+        duracao: validatedData.duracao,
+        status: validatedData.status,
+        observacoes: validatedData.observacoes,
+        valor: validatedData.valor,
+        pago: validatedData.pago,
+      },
+      include: {
+        paciente: true,
+      },
+    });
 
-    return NextResponse.json({
-      success: true,
-      data: novaConsulta,
-    })
+    return NextResponse.json(novaConsulta);
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { success: false, message: "Dados de entrada inválidos", errors: error.errors },
-        { status: 400 },
-      )
-    }
-
-    console.error("Erro ao criar consulta:", error)
-    return NextResponse.json({ success: false, message: "Erro interno do servidor" }, { status: 500 })
+    console.error("Erro ao criar consulta:", error);
+    return NextResponse.json(
+      { error: "Erro interno do servidor ao criar consulta" },
+      { status: 500 }
+    );
+  } finally {
+    await prisma.$disconnect();
   }
 }

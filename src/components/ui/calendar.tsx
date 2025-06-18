@@ -112,9 +112,9 @@ export function Calendar({
   };
 
   return (
-    <div className={cn("p-4 bg-white rounded-lg border shadow-sm", className)}>
+    <div className={cn("rounded-lg border bg-white p-4 shadow-sm", className)}>
       {/* Header com seletores */}
-      <div className="flex items-center justify-between mb-4 gap-2">
+      <div className="mb-4 flex items-center justify-between gap-2">
         <Button
           variant="outline"
           size="sm"
@@ -130,7 +130,7 @@ export function Calendar({
             value={currentMonth.toString()}
             onValueChange={changeMonthSelect}
           >
-            <SelectTrigger className="w-[130px] h-8">
+            <SelectTrigger className="h-8 w-[130px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -144,7 +144,7 @@ export function Calendar({
 
           {/* Seletor de Ano */}
           <Select value={currentYear.toString()} onValueChange={changeYear}>
-            <SelectTrigger className="w-[80px] h-8">
+            <SelectTrigger className="h-8 w-[80px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="max-h-[200px] overflow-y-auto">
@@ -178,11 +178,11 @@ export function Calendar({
       </div>
 
       {/* Cabeçalho dos dias da semana */}
-      <div className="grid grid-cols-7 gap-1 mb-2">
+      <div className="mb-2 grid grid-cols-7 gap-1">
         {dayNames.map((day) => (
           <div
             key={day}
-            className="text-center text-xs font-medium text-gray-500 py-2"
+            className="py-2 text-center text-xs font-medium text-gray-500"
           >
             {day}
           </div>
@@ -214,7 +214,7 @@ export function Calendar({
                   !isSelectedDay &&
                   "bg-blue-100 text-blue-900 hover:bg-blue-200",
                 isDisabledDay &&
-                  "opacity-50 cursor-not-allowed hover:bg-transparent"
+                  "cursor-not-allowed opacity-50 hover:bg-transparent"
               )}
               onClick={() => !isDisabledDay && selectDate(day)}
               disabled={isDisabledDay}
@@ -227,8 +227,8 @@ export function Calendar({
 
       {/* Footer com data selecionada - só a data */}
       {selected && (
-        <div className="mt-3 pt-3 border-t text-center">
-          <p className="text-sm text-gray-600 font-medium">
+        <div className="mt-3 border-t pt-3 text-center">
+          <p className="text-sm font-medium text-gray-600">
             {selected.toLocaleDateString("pt-BR")}
           </p>
         </div>

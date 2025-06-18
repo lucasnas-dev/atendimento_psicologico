@@ -72,7 +72,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
   if (status === "loading") {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900"></div>
       </div>
     );
   }
@@ -153,7 +153,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
             {user && (
               <div className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-3">
-                  <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
                     <span className="text-sm font-medium text-gray-600">
                       {user.name?.charAt(0) || user.email?.charAt(0) || "U"}
                     </span>

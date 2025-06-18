@@ -74,8 +74,8 @@ export function MainSidebar() {
   // ✅ Loading state
   if (status === "loading") {
     return (
-      <div className="w-64 h-screen bg-white border-r flex items-center justify-center">
-        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900"></div>
+      <div className="flex h-screen w-64 items-center justify-center border-r bg-white">
+        <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-gray-900"></div>
       </div>
     );
   }
@@ -111,8 +111,8 @@ export function MainSidebar() {
       <SidebarFooter className="p-4">
         <div className="flex flex-col space-y-4">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <span className="text-primary font-medium">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+              <span className="font-medium text-primary">
                 {/* ✅ Ajustado para user.name (padrão NextAuth) */}
                 {user?.name
                   ?.split(" ")

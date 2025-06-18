@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
 import { Download, Printer } from "lucide-react";
@@ -65,7 +65,7 @@ export default function AutorizacaoMenorPage({
       </DashboardHeader>
 
       <Card className="border-2">
-        <CardHeader className="text-center border-b">
+        <CardHeader className="border-b text-center">
           <CardTitle className="text-2xl">
             AUTORIZAÇÃO PARA ACOMPANHAMENTO PSICOTERAPÊUTICO DE
             CRIANÇA/ADOLESCENTE
@@ -76,7 +76,7 @@ export default function AutorizacaoMenorPage({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="p-6 space-y-6">
+        <CardContent className="space-y-6 p-6">
           <div className="space-y-4">
             <p>
               Eu, <span className="font-bold">{paciente.responsavel.nome}</span>
@@ -100,7 +100,7 @@ export default function AutorizacaoMenorPage({
 
             <p>Declaro estar ciente de que:</p>
 
-            <ol className="list-decimal pl-6 space-y-2">
+            <ol className="list-decimal space-y-2 pl-6">
               <li>
                 Todas as intervenções e documentos produzidos serão regidos
                 pelos dispositivos legais vigentes, em especial pelo disposto no
@@ -141,7 +141,7 @@ export default function AutorizacaoMenorPage({
 
         <CardFooter className="flex flex-col items-start border-t p-6">
           <p className="mb-8">São Paulo, {dataAtual}</p>
-          <div className="flex flex-col md:flex-row w-full justify-between gap-8">
+          <div className="flex w-full flex-col justify-between gap-8 md:flex-row">
             <div className="w-64 border-t border-black pt-2 text-center">
               <p>{paciente.responsavel.nome}</p>
               <p>Responsável Legal pela Criança/Adolescente</p>

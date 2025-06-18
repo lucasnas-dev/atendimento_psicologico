@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
 import { Download, Printer } from "lucide-react";
@@ -59,7 +59,7 @@ export default function TCLEPage({ params }: { params: { id: string } }) {
       </DashboardHeader>
 
       <Card className="border-2">
-        <CardHeader className="text-center border-b">
+        <CardHeader className="border-b text-center">
           <CardTitle className="text-2xl">
             TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO
           </CardTitle>
@@ -69,7 +69,7 @@ export default function TCLEPage({ params }: { params: { id: string } }) {
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="p-6 space-y-6">
+        <CardContent className="space-y-6 p-6">
           <div className="space-y-4">
             <p>
               Eu, <span className="font-bold">{paciente.nome}</span>,
@@ -85,7 +85,7 @@ export default function TCLEPage({ params }: { params: { id: string } }) {
               Fui informado(a) de que o serviço será prestado da seguinte forma:
             </p>
 
-            <ol className="list-decimal pl-6 space-y-2">
+            <ol className="list-decimal space-y-2 pl-6">
               <li>
                 <strong>Modalidade de atendimento:</strong> Psicoterapia
                 individual, com sessões semanais de 50 minutos de duração.
@@ -115,7 +115,7 @@ export default function TCLEPage({ params }: { params: { id: string } }) {
 
             <p>Estou ciente de que:</p>
 
-            <ul className="list-disc pl-6 space-y-2">
+            <ul className="list-disc space-y-2 pl-6">
               <li>
                 O sigilo profissional será mantido pela psicóloga, conforme
                 previsto no Código de Ética Profissional do Psicólogo, exceto
@@ -157,7 +157,7 @@ export default function TCLEPage({ params }: { params: { id: string } }) {
 
         <CardFooter className="flex flex-col items-start border-t p-6">
           <p className="mb-8">São Paulo, {dataAtual}</p>
-          <div className="flex flex-col md:flex-row w-full justify-between gap-8">
+          <div className="flex w-full flex-col justify-between gap-8 md:flex-row">
             <div className="w-64 border-t border-black pt-2 text-center">
               <p>{paciente.nome}</p>
               <p>CPF: {paciente.cpf}</p>

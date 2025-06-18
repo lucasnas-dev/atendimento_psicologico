@@ -163,7 +163,7 @@ export default function PacientePage({ params }: { params: { id: string } }) {
         {/* Cabeçalho do Paciente */}
         <Card>
           <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row gap-6 items-start">
+            <div className="flex flex-col items-start gap-6 md:flex-row">
               <Avatar className="h-24 w-24">
                 <AvatarImage
                   src={`/placeholder.svg?height=96&width=96`}
@@ -182,7 +182,7 @@ export default function PacientePage({ params }: { params: { id: string } }) {
                   <h2 className="text-2xl font-bold">{paciente.nome}</h2>
                   <Badge>{paciente.status}</Badge>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
                     <p className="flex items-center text-sm text-muted-foreground">
                       <Mail className="mr-2 h-4 w-4" />
@@ -340,7 +340,7 @@ export default function PacientePage({ params }: { params: { id: string } }) {
               </CardHeader>
               <CardContent className="space-y-4">
                 {paciente.anotacoes.map((anotacao) => (
-                  <div key={anotacao.id} className="border rounded-md p-4">
+                  <div key={anotacao.id} className="rounded-md border p-4">
                     <h4 className="font-semibold">{anotacao.titulo}</h4>
                     <p className="text-sm text-muted-foreground">
                       {anotacao.data}

@@ -1,5 +1,5 @@
-import { db } from "@/lib/db"
-import type { Consulta } from "@prisma/client"
+import { db } from "@/lib/db";
+import type { Consulta } from "@prisma/client";
 
 export async function getConsultas(tenantId: string) {
   return db.consulta.findMany({
@@ -13,7 +13,7 @@ export async function getConsultas(tenantId: string) {
     orderBy: {
       data: "desc",
     },
-  })
+  });
 }
 
 export async function getConsultaById(id: string, tenantId: string) {
@@ -27,10 +27,13 @@ export async function getConsultaById(id: string, tenantId: string) {
       usuario: true,
       anotacoes: true,
     },
-  })
+  });
 }
 
-export async function getConsultasByPacienteId(pacienteId: string, tenantId: string) {
+export async function getConsultasByPacienteId(
+  pacienteId: string,
+  tenantId: string
+) {
   return db.consulta.findMany({
     where: {
       pacienteId,
@@ -39,23 +42,29 @@ export async function getConsultasByPacienteId(pacienteId: string, tenantId: str
     orderBy: {
       data: "desc",
     },
-  })
+  });
 }
 
-export async function createConsulta(data: Omit<Consulta, "id" | "createdAt" | "updatedAt">) {
+export async function createConsulta(
+  data: Omit<Consulta, "id" | "createdAt" | "updatedAt">
+) {
   return db.consulta.create({
     data,
-  })
+  });
 }
 
-export async function updateConsulta(id: string, data: Partial<Consulta>, tenantId: string) {
+export async function updateConsulta(
+  id: string,
+  data: Partial<Consulta>,
+  tenantId: string
+) {
   return db.consulta.update({
     where: {
       id,
       tenantId,
     },
     data,
-  })
+  });
 }
 
 export async function deleteConsulta(id: string, tenantId: string) {
@@ -64,5 +73,5 @@ export async function deleteConsulta(id: string, tenantId: string) {
       id,
       tenantId,
     },
-  })
+  });
 }

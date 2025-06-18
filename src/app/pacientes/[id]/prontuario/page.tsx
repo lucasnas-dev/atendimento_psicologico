@@ -219,7 +219,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
       {/* Cabeçalho do Prontuário */}
       <Card className="mb-6">
         <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
+          <div className="flex flex-col items-start gap-6 md:flex-row">
             <Avatar className="h-24 w-24">
               <AvatarImage
                 src={`/placeholder.svg?height=96&width=96`}
@@ -238,7 +238,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
                 <h2 className="text-2xl font-bold">{paciente.nome}</h2>
                 <Badge>Prontuário Ativo</Badge>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <p className="text-sm text-muted-foreground">
                     CPF: {paciente.cpf}
@@ -316,7 +316,7 @@ export default function ProntuarioPage({ params }: { params: { id: string } }) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="space-y-4">
                   {editMode ? (
                     <>
